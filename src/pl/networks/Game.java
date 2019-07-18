@@ -65,9 +65,9 @@ public class Game {
         //chose movie to guess
         char chosenMovie[] = pickAMovie(movieList("C:\\Users\\k.starzyk\\Java-practice\\java-OOP-2\\MovieList.txt"));
         char correctLetters[] = new char[chosenMovie.length];
-        char wrongLetters[] = new char[chosenMovie.length *2];
+        char wrongLetters[] = new char[50];
         char movieName[] = new char[chosenMovie.length];
-
+        String playerLetter = "";
         Scanner scanner = new Scanner(System.in);
         int chances = 10;
         int correctLettersCell = 0;
@@ -79,11 +79,11 @@ public class Game {
 
         System.out.println(movieName);
 
-
+        //Game starts
         while (chances > 0)
         {
             System.out.println("You have " + chances +" left.");
-            //Change movie name
+            //Change movie name so only see letters player guess right
             int i = 0;
             for (char letter : chosenMovie)
             {
@@ -101,12 +101,20 @@ public class Game {
                 }
                 i++;
             }
-
+            //Print out movie name for player
             for (char letter: movieName)
             {
                 System.out.print(letter);
             }
 
+            //Check if player won already
+            if (checkWin(movieName))
+            {
+                System.out.println("You Won!!");
+                break;
+            }
+
+            //Letters that player chosen wrong
             System.out.println("\nLetters you already used: ");
 
             for (char letter: wrongLetters)
@@ -114,18 +122,22 @@ public class Game {
                 System.out.print(letter);
             }
 
-            if (checkWin(movieName))
-            {
-                System.out.println("You Won!!");
-                break;
-            }
-            
+
+            //Take new letter from player
             System.out.println("\nWrite a letter: ");
 
-            answer = scanner.nextLine().toCharArray()[0];
+            playerLetter = scanner.nextLine().toLowerCase();
+            if (!playerLetter.isEmpty())
+            {
+                answer = playerLetter.toCharArray()[0];
+            }
+            else
+            {
+                System.out.println("Please write a letter.");
+                answer = ' ';
+            }
 
-
-
+            //Check if input is a letter
             if(Character.isLetter(answer))
             {
                 //check if letter was already used
@@ -137,6 +149,7 @@ public class Game {
                         System.out.println("Correct letter!");
                         correctLetters[correctLettersCell++] = answer;
                     }
+                    //Wrong guess -1 chances
                     else
                     {
                         chances--;
@@ -144,6 +157,7 @@ public class Game {
                         wrongLetters[wrongLettersCell++] = answer;
                     }
                 }
+                //Player used already a letter
                 else
                 {
                     System.out.println("You used this letter already");
@@ -158,5 +172,10 @@ public class Game {
 
         }
 
+        System.out.println("You loose to bad, the answer was: ");
+        for (char letter: chosenMovie)
+        {
+            System.out.print(letter);
+        }
     }
 }
