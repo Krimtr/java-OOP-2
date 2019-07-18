@@ -63,7 +63,7 @@ public class Game {
     public void startGame()
     {
         //chose movie to guess
-        char chosenMovie[] = pickAMovie(movieList("C:\\Users\\k.starzyk\\Java-practice\\java-OOP-2\\MovieList.txt"));
+        char chosenMovie[] = pickAMovie(movieList("MovieList.txt"));
         char correctLetters[] = new char[chosenMovie.length];
         char wrongLetters[] = new char[50];
         char movieName[] = new char[chosenMovie.length];
